@@ -1,4 +1,7 @@
-# generate-env-sample
+# Generate-Env-Sample
+
+![PyPI version](https://img.shields.io/pypi/v/generate-env-sample?color=blue&label=PyPI&logo=pypi)  
+
 
 A simple CLI tool to generate `.env.sample` files from existing `.env` files. This tool reads your `.env` file, preserves comments and empty lines, and creates a sample file with keys but without values.
 
@@ -6,29 +9,49 @@ A simple CLI tool to generate `.env.sample` files from existing `.env` files. Th
 
 - Preserves comments and empty lines from the original `.env` file.
 - Generates a clean `.env.sample` with keys set to empty values.
-- Built with Python and Typer.
+- Handles encoding issues, permissions, and file existence gracefully.
+- Built with Python and Typer for a smooth CLI experience.
 
 ## Installation
 
+You can install using one of the following methods:
+
+- Using pipx:
+  ```sh
+  pipx install generate-env-sample
+  ```
+- Using uv:
+  ```sh
+  uv tool install generate-env-sample
+  ```
+- Run directly with pipx:
+  ```sh
+  pipx run generate-env-sample
+  ```
+- Run directly with uvx:
+  ```sh
+  uvx generate-env-sample
+  ```
 
 ### Prerequisites
 - Python 3.11 or higher
 
-### Install from Source
-1. Clone the repository:
+## Build Instructions
+
+This project uses `uv` for management. To build the project, follow these steps:
+
+1. Install `uv` by following the [uv documentation](https://docs.astral.sh/uv/getting-started/installation/).
+   
+2. Clone the repository:
+
    ```bash
    git clone https://github.com/heshinth/generate-env-sample.git
    cd generate-env-sample
    ```
 
-2. Install dependencies using `uv` (recommended):
+3. Sync the project dependencies using uv sync:
    ```bash
    uv sync
-   ```
-
-   Or using pip:
-   ```bash
-   pip install -e .
    ```
 
 ## Usage
@@ -40,8 +63,8 @@ generate-env-sample
 ```
 
 ### Options
-- `--file-name`: Specify the `.env` file to read from (default: `.env`)
-- `--sample-name`: Specify the output `.env.sample` file (default: `.env.sample`)
+- `--file`: Specify the `.env` file to read from (default: `.env`)
+- `--sample`: Specify the output `.env.sample` file (default: `.env.sample`)
 
 ### Examples
 
@@ -52,7 +75,7 @@ generate-env-sample
 
 2. Use a custom `.env` file:
    ```bash
-   generate-env-sample --file-name myenv.env --sample-name myenv.sample
+   generate-env-sample --file myenv.env --sample myenv.sample
    ```
 
 3. Get help:
@@ -88,4 +111,4 @@ Contributions are welcome! Please open an issue or submit a pull request on [Git
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
