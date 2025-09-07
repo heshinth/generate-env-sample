@@ -13,10 +13,10 @@ app = typer.Typer(
 @app.command()
 def main(
     file_name: Annotated[
-        str, typer.Argument(help="The .env file to read from")
+        str, typer.Option(help="The .env file to read from")
     ] = ".env",
     sample_name: Annotated[
-        str, typer.Argument(help="The .env.sample file to create")
+        str, typer.Option(help="The .env.sample file to create")
     ] = ".env.sample",
 ) -> None:
     """
