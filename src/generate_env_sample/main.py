@@ -12,33 +12,33 @@ app = typer.Typer(
 
 @app.command()
 def main(
-    file_name: Annotated[
-        str, typer.Option(help="The .env file to read from")
-    ] = ".env",
-    sample_name: Annotated[
+    file: Annotated[str, typer.Option(help="The .env file to read from")] = ".env",
+    sample: Annotated[
         str, typer.Option(help="The .env.sample file to create")
     ] = ".env.sample",
 ) -> None:
     """
     Generate a .env.sample file from the existing .env file.
     """
-    env_path = Path(file_name)
-    sample_path = Path(sample_name)
+
+    env_path = Path(file)
+    sample_path = Path(sample)
 
     if not env_path.exists():
-        typer.echo(f"Error: {file_name} file not found.", err=True)
+        typer.echo(f"Error: {file} file not found.", err=True)
         raise typer.Exit(code=1)
 
     if sample_path.exists():
-        typer.echo(
-            f"Error: {sample_name} already exists. Please remove it or choose a different name.",
-            err=True,
+        overwrite = typer.confirm(
+            f"File {sample} already exists. Overwrite?", default=True
         )
-        raise typer.Exit(code=1)
+        if not overwrite:
+            typer.echo("Operation cancelled.")
+            raise typer.Exit(code=0)
 
     try:
         with env_path.open("r", encoding="utf-8") as env_file:
-            typer.echo(f"Generating {sample_name} from {file_name}...")
+            typer.echo(f"Generating {sample} from {file}...")
             sample_lines = []
 
             for line in env_file:
@@ -55,20 +55,20 @@ def main(
             with sample_path.open("w", encoding="utf-8") as sample_file:
                 sample_file.writelines(sample_lines)
 
-            typer.echo(f"{sample_name} created successfully ✅")
+            typer.echo(f"{sample} created successfully!")
 
     except PermissionError:
         typer.echo(
-            f"Error: Permission denied for {file_name} or {sample_name}.", err=True
+            f"Error: Permission denied for {file} or {sample}.", err=True
         )
         raise typer.Exit(code=1)
-    
+
     except UnicodeDecodeError:
         typer.echo(
-            f"Error: Encoding issue with {file_name}. Ensure it's UTF-8.", err=True
+            f"Error: Encoding issue with {file}. Ensure it's UTF-8.", err=True
         )
         raise typer.Exit(code=1)
-    
+
     except Exception as e:
         typer.echo(f"An unexpected error occurred: {e}", err=True)
         raise typer.Exit(code=1)
