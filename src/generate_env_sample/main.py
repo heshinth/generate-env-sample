@@ -10,7 +10,7 @@ app = typer.Typer(
 )
 
 
-@app.callback()
+@app.command()
 def main(
     file_name: Annotated[
         str, typer.Argument(help="The .env file to read from")
