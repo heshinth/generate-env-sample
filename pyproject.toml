@@ -1,6 +1,6 @@
 [project]
 name = "generate-env-sample"
-version = "0.1.1"
+version = "0.1.2"
 description = "A simple CLI tool to generate .env.sample files from existing .env files, preserving comments and empty lines."
 readme = "README.md"
 authors = [{ name = "Heshinth P" }, { email = "heshinth@gmail.com" }]
